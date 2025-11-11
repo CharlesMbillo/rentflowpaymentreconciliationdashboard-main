@@ -1,0 +1,38 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model IpnLog {
+  id        String   @id @default(cuid())
+  txnId     String?  @unique
+  reference String?
+  amount    Float?
+  raw       Json?
+  verified  Boolean  @default(false)
+  processed Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Tenant {
+  id         String  @id @default(cuid())
+  name       String
+  accountRef String? @unique
+
+  // ✅ Back relation for Activity
+  activities Activity[]
+}
+
+model Activity {
+  id        String   @id @default(cuid())
+  txnId     String
+  tenantId  String
+  createdAt DateTime @default(now())
+
+  // ✅ forward relation
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+}

@@ -27,6 +27,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const currentUser = await getCurrentUserAction()
       setUser(currentUser)
     } catch (error) {
+      console.error("[v0] Error refreshing user:", error)
       setUser(null)
     } finally {
       setLoading(false)

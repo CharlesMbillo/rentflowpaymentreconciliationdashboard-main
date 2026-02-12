@@ -134,7 +134,7 @@ export async function recordPayment(data: {
 
   // Log audit trail
   await sql`
-    INSERT INTO audit_logs (user_id, action, entity_type, entity_id, new_value)
+    INSERT INTO audit_logs (user_id, action, entity_type, entity_id, details)
     VALUES (
       ${user.id},
       'create',

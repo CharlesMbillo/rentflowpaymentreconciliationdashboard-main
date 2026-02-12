@@ -60,7 +60,7 @@ export function AuditLogTable({ logs }: AuditLogTableProps) {
                 <TableCell className="capitalize">{log.entity_type}</TableCell>
                 <TableCell>{log.entity_id || "N/A"}</TableCell>
                 <TableCell className="max-w-xs truncate text-xs text-muted-foreground">
-                  {log.new_value ? JSON.stringify(log.new_value).substring(0, 50) + "..." : "N/A"}
+                  {log.details ? JSON.stringify(log.details).substring(0, 50) + "..." : "N/A"}
                 </TableCell>
               </TableRow>
             ))

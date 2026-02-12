@@ -11,10 +11,8 @@ export interface AuditLog {
   action: string
   entity_type: string
   entity_id: number | null
-  old_value: any
-  new_value: any
+  details: any
   ip_address: string | null
-  user_agent: string | null
   created_at: string
   user_name?: string
   user_email?: string

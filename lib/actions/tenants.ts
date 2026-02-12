@@ -133,7 +133,7 @@ export async function createTenant(data: {
 
   // Log audit trail
   await sql`
-    INSERT INTO audit_logs (user_id, action, entity_type, entity_id, new_value)
+    INSERT INTO audit_logs (user_id, action, entity_type, entity_id, details)
     VALUES (
       ${userId},
       'create',
@@ -182,14 +182,13 @@ export async function updateTenant(
 
   // Log audit trail
   await sql`
-    INSERT INTO audit_logs (user_id, action, entity_type, entity_id, old_value, new_value)
+    INSERT INTO audit_logs (user_id, action, entity_type, entity_id, details)
     VALUES (
       ${user.id},
       'update',
       'tenant',
       ${id},
-      ${JSON.stringify(oldData[0])},
-      ${JSON.stringify(result[0])}
+      ${JSON.stringify({ old: oldData[0], new: result[0] })}
     )
   `
 
@@ -275,7 +274,7 @@ export async function createLease(data: {
 
   // Log audit trail
   await sql`
-    INSERT INTO audit_logs (user_id, action, entity_type, entity_id, new_value)
+    INSERT INTO audit_logs (user_id, action, entity_type, entity_id, details)
     VALUES (
       ${user.id},
       'create',

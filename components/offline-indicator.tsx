@@ -8,8 +8,15 @@ import { useEffect, useState } from "react"
 export function OfflineIndicator() {
   const isOnline = useOnlineStatus()
   const [showAlert, setShowAlert] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (!mounted) return
+
     if (!isOnline) {
       setShowAlert(true)
     } else {
@@ -17,9 +24,9 @@ export function OfflineIndicator() {
       const timer = setTimeout(() => setShowAlert(false), 3000)
       return () => clearTimeout(timer)
     }
-  }, [isOnline])
+  }, [isOnline, mounted])
 
-  if (!showAlert) return null
+  if (!mounted || !showAlert) return null
 
   return (
     <div className="fixed bottom-4 right-4 z-50 max-w-md">

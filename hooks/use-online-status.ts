@@ -4,10 +4,12 @@ import { useEffect, useState } from "react"
 
 export function useOnlineStatus() {
   const [isOnline, setIsOnline] = useState(true)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    // Set initial status
-    setIsOnline(navigator.onLine)
+    setMounted(true)
+    // Set initial status only on client
+    setIsOnline(typeof navigator !== "undefined" ? navigator.onLine : true)
 
     // Listen for online/offline events
     const handleOnline = () => setIsOnline(true)
@@ -22,5 +24,5 @@ export function useOnlineStatus() {
     }
   }, [])
 
-  return isOnline
+  return mounted ? isOnline : true
 }
